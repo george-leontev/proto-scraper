@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="../build/Scraper.Web.props" />
+</Project>

@@ -1,0 +1,11 @@
+/home/george/scraper/Scraper.Domain/bin/Debug/net8.0/Scraper.Domain.deps.json
+/home/george/scraper/Scraper.Domain/bin/Debug/net8.0/Scraper.Domain.dll
+/home/george/scraper/Scraper.Domain/bin/Debug/net8.0/Scraper.Domain.pdb
+/home/george/scraper/Scraper.Domain/obj/Debug/net8.0/Scraper.Domain.GeneratedMSBuildEditorConfig.editorconfig
+/home/george/scraper/Scraper.Domain/obj/Debug/net8.0/Scraper.Domain.AssemblyInfoInputs.cache
+/home/george/scraper/Scraper.Domain/obj/Debug/net8.0/Scraper.Domain.AssemblyInfo.cs
+/home/george/scraper/Scraper.Domain/obj/Debug/net8.0/Scraper.Domain.csproj.CoreCompileInputs.cache
+/home/george/scraper/Scraper.Domain/obj/Debug/net8.0/Scraper.Domain.dll
+/home/george/scraper/Scraper.Domain/obj/Debug/net8.0/refint/Scraper.Domain.dll
+/home/george/scraper/Scraper.Domain/obj/Debug/net8.0/Scraper.Domain.pdb
+/home/george/scraper/Scraper.Domain/obj/Debug/net8.0/ref/Scraper.Domain.dll

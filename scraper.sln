@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.002.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Scraper.Web", "Scraper.Web\Scraper.Web.csproj", "{6F22F927-1346-4BE1-BB02-4C587163F580}"
+EndProject
+Project("{30C4DFDA-1567-47A2-ABEB-D6E4AE2B0884}") = "Scraper.Domain", "Scraper.Domain\Scraper.Domain.csproj", "{39DD1440-EE0F-428D-9A59-3D0308FA1A98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper.DataAccess", "Scraper.DataAccess\Scraper.DataAccess.csproj", "{7A91387D-CACB-4B69-9B17-1CC0094A2B87}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6F22F927-1346-4BE1-BB02-4C587163F580}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F22F927-1346-4BE1-BB02-4C587163F580}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F22F927-1346-4BE1-BB02-4C587163F580}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F22F927-1346-4BE1-BB02-4C587163F580}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A91387D-CACB-4B69-9B17-1CC0094A2B87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A91387D-CACB-4B69-9B17-1CC0094A2B87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A91387D-CACB-4B69-9B17-1CC0094A2B87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A91387D-CACB-4B69-9B17-1CC0094A2B87}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {91680568-3185-45FD-835C-399BCD098B92}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,12 @@
+services:
+    scraper-database:
+        container_name: scraper-database
+        build:
+            context: .
+            dockerfile: Dockerfile.database
+        environment:
+            - ACCEPT_EULA=Y
+            - MSSQL_SA_PASSWORD=abcd1234_efg
+            - MSSQL_PID=Developer
+        ports:
+            - 21433:1433
