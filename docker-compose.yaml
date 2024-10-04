@@ -1,4 +1,18 @@
 services:
+    selenium-hub:
+        container_name: scraper-selenium-hub
+        image: selenium/hub:latest
+        ports:
+            - 4444:4444
+    chrome-node:
+        container_name: scraper-chrome-node
+        image: selenium/node-chrome:latest
+        depends_on:
+            - selenium-hub
+        environment:
+            - SE_EVENT_BUS_HOST=scraper-selenium-hub
+            - SE_EVENT_BUS_PUBLISH_PORT=4442
+            - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
     scraper-database:
         container_name: scraper-database
         build:

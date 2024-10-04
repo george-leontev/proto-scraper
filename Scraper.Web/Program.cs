@@ -13,10 +13,12 @@ builder.Configuration
 builder.Services.AddDbContext<AppDataContext>(options =>
 {
     var c = builder.Configuration.GetConnectionString("DefaultConnectionString");
-    options.UseSqlServer(c);
+    options.UseSqlServer(c, b => b.MigrationsAssembly("Scraper.Web"));
 });
 
 builder.Services.AddTransient<DateTimeService>();
+
+builder.Services.AddHostedService<BackgroundTickService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
