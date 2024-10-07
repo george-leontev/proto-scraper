@@ -63,6 +63,10 @@ public class BackgroundTickService : BackgroundService
         // webDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
         RandomTimeout(3000, 5000);
 
+        IWebElement inputSearchElement = webDriver.FindElement(By.XPath("//input[@class='ga8a_32 tsBody500Medium']"));
+        inputSearchElement.Click();
+
+
         Screenshot screenshot = ((ITakesScreenshot)webDriver).GetScreenshot();
         screenshot.SaveAsFile($"/home/leo/Pictures/{Guid.NewGuid()}.png");
         webDriver.Quit();
