@@ -1,5 +1,6 @@
 using Scraper.DataAccess;
 using Microsoft.EntityFrameworkCore;
+using Scraper.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,8 @@ builder.Services.AddDbContext<AppDataContext>(options =>
     options.UseSqlServer(c, b => b.MigrationsAssembly("Scraper.Web"));
 });
 
-builder.Services.AddTransient<DateTimeService>();
+builder.Services.AddTransient<ProductExtractor>();
+builder.Services.AddTransient<ProductWebDriver>();
 
 builder.Services.AddHostedService<BackgroundTickService>();
 

@@ -10,12 +10,10 @@ namespace Scraper.Web.Controllers;
 public class ProductController : ControllerBase
 {
     private readonly AppDataContext _appDataContext;
-    private readonly DateTimeService _dateTimeService;
 
-    public ProductController(AppDataContext appDataContext, DateTimeService dateTimeService)
+    public ProductController(AppDataContext appDataContext)
     {
         _appDataContext = appDataContext;
-        _dateTimeService = dateTimeService;
     }
 
     [HttpGet]
@@ -25,9 +23,4 @@ public class ProductController : ControllerBase
         return pr;
     }
 
-    [HttpGet("utc")]
-    public ActionResult<string> GetUtc()
-    {
-        return _dateTimeService.GetDateTime();
-    }
 }
