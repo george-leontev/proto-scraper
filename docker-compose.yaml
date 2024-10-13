@@ -1,26 +1,67 @@
 services:
+    zookeeper:
+        image: confluentinc/cp-zookeeper:latest
+        container_name: zookeeper
+        environment:
+            ZOOKEEPER_CLIENT_PORT: 2181
+            ZOOKEEPER_TICK_TIME: 2000
+        ports:
+            - 2181:2181
+            
+    kafka-broker:
+        image: confluentinc/cp-kafka:7.2.1
+        ports:
+            - 19092:19092
+        environment:
+            KAFKA_BROKER_ID: 1
+            KAFKA_ZOOKEEPER_CONNECT: 'zookeeper:2181'
+            KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+            KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka-broker-1:9092,PLAINTEXT_INTERNAL://localhost:19092
+            KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+        depends_on:
+            - zookeeper
+
     selenium-hub:
         container_name: scraper-selenium-hub
         image: selenium/hub:latest
         ports:
             - 4444:4444
+
     chrome-node:
         container_name: scraper-chrome-node
         image: selenium/node-chrome:latest
-        depends_on:
-            - selenium-hub
         environment:
             - SE_EVENT_BUS_HOST=scraper-selenium-hub
             - SE_EVENT_BUS_PUBLISH_PORT=4442
             - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+        depends_on:
+            - selenium-hub
+
     scraper-database:
         container_name: scraper-database
-        build:
-            context: .
-            dockerfile: Dockerfile.database
+        image: mcr.microsoft.com/mssql/server
         environment:
             - ACCEPT_EULA=Y
             - MSSQL_SA_PASSWORD=abcd1234_efg
             - MSSQL_PID=Developer
         ports:
             - 21433:1433
+
+    scraper-migrations:
+        container_name: scraper-migrations
+        build:
+            dockerfile: Dockerfile.scraper-migrations
+            context: .
+        depends_on:
+            - scraper-database
+
+    scraper-web:
+        container_name: scraper-web
+        build:
+            dockerfile: Dockerfile.scraper-web
+            context: .
+        ports:
+            - 5000:8080
+        depends_on:
+            - selenium-hub
+            - scraper-database

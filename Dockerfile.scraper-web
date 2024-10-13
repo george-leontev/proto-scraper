@@ -1,0 +1,21 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+
+WORKDIR /app
+
+COPY ./scraper.sln /app/
+COPY ./Scraper.Web /app/Scraper.Web/
+COPY ./Scraper.Domain /app/Scraper.Domain/
+COPY ./Scraper.DataAccess /app/Scraper.DataAccess/
+
+RUN dotnet publish
+
+
+FROM mcr.microsoft.com/dotnet/aspnet:8.0
+
+WORKDIR /app
+
+COPY --from=build /app/Scraper.Web/bin/Release/net8.0 /app/
+
+EXPOSE 8080
+
+ENTRYPOINT ["dotnet", "Scraper.Web.dll"]
