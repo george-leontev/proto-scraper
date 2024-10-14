@@ -1,10 +1,3 @@
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Remote;
-using OpenQA.Selenium.Support.UI;
-using Scraper.Domain.Models;
-using SeleniumExtras.WaitHelpers;
-
 namespace Scraper.Web.Services;
 
 public class BackgroundTickService : BackgroundService

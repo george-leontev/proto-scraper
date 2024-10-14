@@ -1,17 +1,21 @@
+using Microsoft.Extensions.Options;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 using Scraper.Domain.Models;
+using Scraper.Web.Models.Configs;
 using Scraper.Web.Services;
 using SeleniumExtras.WaitHelpers;
 
 public class ProductWebDriver
 {
     private readonly ProductExtractor _productExtractor;
+    private readonly AppConfigModel _appConfig;
 
-    public ProductWebDriver(ProductExtractor productExtractor)
+    public ProductWebDriver( ProductExtractor productExtractor, IOptions<AppConfigModel> options)
     {
+        _appConfig = options.Value;
         _productExtractor = productExtractor;
     }
 
@@ -23,17 +27,12 @@ public class ProductWebDriver
 
     public async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        string hubUrl = "http://localhost:4444/wd/hub";
+        string hubUrl = _appConfig.WebDriverConfig.HubUrl;
         var options = new ChromeOptions();
-        options.AddArguments([
-            "--disable-blink-features=AutomationControlled",
-            "--disable-dev-shm-usage",
-            "--disable-gpu",
-            "--window-size=1024,1080"
-        ]);
+        options.AddArguments(_appConfig.WebDriverConfig.BrowserArgs);
+
         options.AddExcludedArgument("enable-automation");
         options.AddAdditionalOption("useAutomationExtension", false);
-        options.AddArgument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/118.0.5993.89 Safari/537.36");
 
         var webDriver = new RemoteWebDriver(new Uri(hubUrl), options.ToCapabilities(), TimeSpan.FromSeconds(180));
         webDriver.Manage().Window.Maximize();

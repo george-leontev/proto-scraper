@@ -50,6 +50,5 @@ public class ProductExtractor
 
         await _appDataContext.AddRangeAsync(list, stoppingToken);
         await _appDataContext.SaveChangesAsync(stoppingToken);
-
     }
 }

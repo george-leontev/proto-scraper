@@ -1,7 +1,5 @@
-using Scraper.DataAccess;
 using Microsoft.EntityFrameworkCore;
-using Scraper.Web.Services;
-using Scraper.Web.Models.Configs;
+using Scraper.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,18 +10,10 @@ builder.Configuration
     .AddEnvironmentVariables()
     .AddCommandLine(args);
 
-builder.Services.Configure<AppConfigModel>(builder.Configuration);
-
 builder.Services.AddDbContext<AppDataContext>(options =>
 {
-    var c = builder.Configuration.GetConnectionString("DefaultConnectionString");
-    options.UseSqlServer(c, b => b.MigrationsAssembly("Scraper.Web"));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 });
-
-builder.Services.AddTransient<ProductExtractor>();
-builder.Services.AddTransient<ProductWebDriver>();
-
-builder.Services.AddHostedService<BackgroundTickService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
