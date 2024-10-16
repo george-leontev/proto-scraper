@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Scraper.Archiver.Services;
 using Scraper.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -14,6 +15,8 @@ builder.Services.AddDbContext<AppDataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 });
+
+builder.Services.AddHostedService<ProductArchiverService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

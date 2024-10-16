@@ -1,10 +1,10 @@
 namespace Scraper.Web.Services;
 
-public class BackgroundTickService : BackgroundService
+public class ProductService : BackgroundService
 {
     private IServiceProvider _serviceProvider { get; set; }
 
-    public BackgroundTickService(IServiceProvider serviceProvider)
+    public ProductService(IServiceProvider serviceProvider)
     {
         _serviceProvider = serviceProvider;
     }

@@ -1,16 +1,19 @@
+using Confluent.Kafka;
 using HtmlAgilityPack;
-using Scraper.DataAccess;
+using Microsoft.Extensions.Options;
 using Scraper.Domain.Models;
+using Scraper.Web.Models.Configs;
 
 namespace Scraper.Web.Services;
 
 public class ProductExtractor
 {
-    private readonly AppDataContext _appDataContext;
 
-    public ProductExtractor(AppDataContext appDataContext)
+    private readonly AppConfigModel _appConfig;
+
+    public ProductExtractor(IOptions<AppConfigModel> options)
     {
-        _appDataContext = appDataContext;
+        _appConfig = options.Value;
     }
 
     public async Task ExecuteAsync(string pageSource, CancellationToken stoppingToken)
@@ -18,7 +21,6 @@ public class ProductExtractor
         var htmlDoc = new HtmlDocument();
         htmlDoc.LoadHtml(pageSource);
         var list = new List<ProductDataModel>();
-
         var nodes = htmlDoc.DocumentNode.SelectNodes("//div[contains(@data-widget,'searchResults') and contains(@class,'widget-search-result-container')]/child::div/child::div").ToArray();
 
         foreach (var node in nodes)
@@ -40,7 +42,6 @@ public class ProductExtractor
                     Uid = int.Parse(productArticle),
                     CheckingDate = DateTime.UtcNow
                 });
-
             }
             catch (Exception ex)
             {
@@ -48,7 +49,20 @@ public class ProductExtractor
             }
         }
 
-        await _appDataContext.AddRangeAsync(list, stoppingToken);
-        await _appDataContext.SaveChangesAsync(stoppingToken);
+        var config = new ProducerConfig
+        {
+            BootstrapServers = _appConfig.KafkaConfig.Endpoint,
+        };
+
+        using var producer = new ProducerBuilder<Null, string>(config).Build();
+        try
+        {
+            var result = await producer.ProduceAsync(_appConfig.KafkaConfig.Topic, new Message<Null, string> { Value = "hello!!" });
+            Console.WriteLine($"Message was sent to '{result.TopicPartitionOffset}'");
+        }
+        catch (ProduceException<Null, string> e)
+        {
+            Console.WriteLine($"Error sending message: {e.Error.Reason}");
+        }
     }
 }

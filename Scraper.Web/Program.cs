@@ -23,7 +23,7 @@ builder.Services.AddDbContext<AppDataContext>(options =>
 builder.Services.AddTransient<ProductExtractor>();
 builder.Services.AddTransient<ProductWebDriver>();
 
-builder.Services.AddHostedService<BackgroundTickService>();
+builder.Services.AddHostedService<ProductService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

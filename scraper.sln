@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper.DataAccess", "Scrap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper.Archiver", "Scraper.Archiver\Scraper.Archiver.csproj", "{18F7585B-C93D-4966-96FD-FAECBF1433B0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scraper.Common", "Scraper.Common\Scraper.Common.csproj", "{252FC53D-B5F5-4F54-97DB-5321B2D3CE9D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{18F7585B-C93D-4966-96FD-FAECBF1433B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{18F7585B-C93D-4966-96FD-FAECBF1433B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{18F7585B-C93D-4966-96FD-FAECBF1433B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{252FC53D-B5F5-4F54-97DB-5321B2D3CE9D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{252FC53D-B5F5-4F54-97DB-5321B2D3CE9D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{252FC53D-B5F5-4F54-97DB-5321B2D3CE9D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{252FC53D-B5F5-4F54-97DB-5321B2D3CE9D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
