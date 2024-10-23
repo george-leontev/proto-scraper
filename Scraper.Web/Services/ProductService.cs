@@ -1,3 +1,5 @@
+using Scraper.Common.Services;
+
 namespace Scraper.Web.Services;
 
 public class ProductService : BackgroundService
@@ -26,6 +28,9 @@ public class ProductService : BackgroundService
     private async Task DoProcessingAsync(CancellationToken stoppingToken)
     {
         using var serviceScope = _serviceProvider.GetRequiredService<IServiceScopeFactory>().CreateScope();
+
+        var kafkaTopicBuilder = serviceScope.ServiceProvider.GetRequiredService<KafkaTopicBuilderService>();
+        await kafkaTopicBuilder.BuildAsync();
 
         var productWebDriver = serviceScope.ServiceProvider.GetRequiredService<ProductWebDriver>();
         await productWebDriver.ExecuteAsync(stoppingToken);

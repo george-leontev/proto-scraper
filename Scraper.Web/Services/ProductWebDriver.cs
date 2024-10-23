@@ -1,4 +1,3 @@
-using Microsoft.Extensions.Options;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Remote;
@@ -13,9 +12,9 @@ public class ProductWebDriver
     private readonly ProductExtractor _productExtractor;
     private readonly AppConfigModel _appConfig;
 
-    public ProductWebDriver( ProductExtractor productExtractor, IOptions<AppConfigModel> options)
+    public ProductWebDriver(ProductExtractor productExtractor, IAppConfigModel appConfig)
     {
-        _appConfig = options.Value;
+        _appConfig = (AppConfigModel)appConfig;
         _productExtractor = productExtractor;
     }
 
@@ -27,7 +26,7 @@ public class ProductWebDriver
 
     public async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        string hubUrl = _appConfig.WebDriverConfig.HubUrl;
+        string hubUrl = _appConfig.WebDriverConfig!.HubUrl;
         var options = new ChromeOptions();
         options.AddArguments(_appConfig.WebDriverConfig.BrowserArgs);
 

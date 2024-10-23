@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Scraper.Archiver.Models.Configs;
 using Scraper.Archiver.Services;
+using Scraper.Common.Services;
 using Scraper.DataAccess;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,12 +13,17 @@ builder.Configuration
     .AddEnvironmentVariables()
     .AddCommandLine(args);
 
+var appConfig = new AppConfigModel();
+builder.Configuration.Bind(appConfig);
+builder.Services.AddSingleton<IAppConfigModel>(appConfig);
+
 builder.Services.AddDbContext<AppDataContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"));
 });
 
 builder.Services.AddHostedService<ProductArchiverService>();
+builder.Services.AddTransient<KafkaTopicBuilderService>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

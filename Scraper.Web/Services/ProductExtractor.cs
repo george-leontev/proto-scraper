@@ -1,6 +1,7 @@
 using Confluent.Kafka;
 using HtmlAgilityPack;
-using Microsoft.Extensions.Options;
+using Scraper.Common.Serialization;
+using Scraper.Common.Services;
 using Scraper.Domain.Models;
 using Scraper.Web.Models.Configs;
 
@@ -8,12 +9,11 @@ namespace Scraper.Web.Services;
 
 public class ProductExtractor
 {
-
     private readonly AppConfigModel _appConfig;
 
-    public ProductExtractor(IOptions<AppConfigModel> options)
+    public ProductExtractor(IAppConfigModel appConfig)
     {
-        _appConfig = options.Value;
+        _appConfig = (AppConfigModel)appConfig;
     }
 
     public async Task ExecuteAsync(string pageSource, CancellationToken stoppingToken)
@@ -54,10 +54,13 @@ public class ProductExtractor
             BootstrapServers = _appConfig.KafkaConfig.Endpoint,
         };
 
-        using var producer = new ProducerBuilder<Null, string>(config).Build();
+        var producerBuilder = new ProducerBuilder<Null, List<ProductDataModel>>(config);
+        producerBuilder.SetValueSerializer(new ProductListSerializer());
+
+        using var producer = producerBuilder.Build();
         try
         {
-            var result = await producer.ProduceAsync(_appConfig.KafkaConfig.Topic, new Message<Null, string> { Value = "hello!!" });
+            var result = await producer.ProduceAsync(_appConfig.KafkaConfig.Topic, new Message<Null, List<ProductDataModel>> { Value = list });
             Console.WriteLine($"Message was sent to '{result.TopicPartitionOffset}'");
         }
         catch (ProduceException<Null, string> e)

@@ -2,8 +2,10 @@ using Scraper.DataAccess;
 using Microsoft.EntityFrameworkCore;
 using Scraper.Web.Services;
 using Scraper.Web.Models.Configs;
+using Scraper.Common.Services;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Services.AddHealthChecks();
 
 builder.Configuration
     .SetBasePath(AppDomain.CurrentDomain.BaseDirectory)
@@ -12,7 +14,9 @@ builder.Configuration
     .AddEnvironmentVariables()
     .AddCommandLine(args);
 
-builder.Services.Configure<AppConfigModel>(builder.Configuration);
+var appConfig = new AppConfigModel();
+builder.Configuration.Bind(appConfig);
+builder.Services.AddSingleton<IAppConfigModel>(appConfig);
 
 builder.Services.AddDbContext<AppDataContext>(options =>
 {
@@ -22,6 +26,8 @@ builder.Services.AddDbContext<AppDataContext>(options =>
 
 builder.Services.AddTransient<ProductExtractor>();
 builder.Services.AddTransient<ProductWebDriver>();
+
+builder.Services.AddTransient<KafkaTopicBuilderService>();
 
 builder.Services.AddHostedService<ProductService>();
 
@@ -35,5 +41,6 @@ app.UseSwagger();
 app.UseSwaggerUI();
 
 app.MapControllers();
+app.MapHealthChecks("/healthz");
 
 app.Run();

@@ -2,9 +2,7 @@ using Scraper.Common.Models.Configs;
 
 namespace Scraper.Web.Models.Configs;
 
-public class AppConfigModel
+public class AppConfigModel : AppConfigBaseModel
 {
-    public required WebDriverConfigModel WebDriverConfig { get; set; }
-
-    public required KafkaConfigModel KafkaConfig { get; set; }
+    public WebDriverConfigModel? WebDriverConfig { get; set; }
 }

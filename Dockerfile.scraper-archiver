@@ -5,20 +5,17 @@ WORKDIR /app
 COPY ./scraper.sln /app/
 COPY ./Scraper.Web /app/Scraper.Web/
 COPY ./Scraper.Domain /app/Scraper.Domain/
+COPY ./Scraper.Archiver /app/Scraper.Archiver/
 COPY ./Scraper.DataAccess /app/Scraper.DataAccess/
 COPY ./Scraper.Common /app/Scraper.Common/
 
-RUN dotnet build ./Scraper.Web/Scraper.Web.csproj --configuration Release
+RUN dotnet publish
 
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 
 WORKDIR /app
 
-COPY --from=build /app/Scraper.Web/bin/Release/net8.0 /app/
+COPY --from=build /app/Scraper.Archiver/bin/Release/net8.0 /app/
 
-RUN apt-get update && apt-get install -y curl
-
-EXPOSE 8080
-
-ENTRYPOINT ["dotnet", "Scraper.Web.dll"]
+ENTRYPOINT ["dotnet", "Scraper.Archiver.dll"]

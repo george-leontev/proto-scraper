@@ -10,4 +10,5 @@ public class AppDataContext: DbContext
     }
 
     public DbSet<ProductDataModel> Products { get; set; }
+    public DbSet<ProductTaskDataModel> ProductTasks { get; set; }
 }

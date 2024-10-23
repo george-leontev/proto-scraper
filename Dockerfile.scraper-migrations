@@ -6,6 +6,8 @@ COPY ./scraper.sln /app/
 COPY ./Scraper.Web /app/Scraper.Web/
 COPY ./Scraper.Domain /app/Scraper.Domain/
 COPY ./Scraper.DataAccess /app/Scraper.DataAccess/
+COPY ./Scraper.Common /app/Scraper.Common/
+COPY ./Scraper.Archiver /app/Scraper.Archiver/
 
 ENV PATH $PATH:/root/.dotnet/tools
 RUN dotnet tool install --global dotnet-ef
